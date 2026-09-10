@@ -1,0 +1,1354 @@
+/* ==========================================================================
+   BRYT TECHNOLOGIES - GLOBAL DESIGN SYSTEM
+   ========================================================================== */
+
+/* --- 1. CSS VARIABLES (THEMING & COLORS) --- */
+:root {
+    /* Core Brand Colors */
+    --bryt-primary: #1D5ED0;
+    --bryt-accent: #159FE3;
+    --bryt-navy: #071A3A;
+    --bryt-near-black: #0B1220;
+    --bryt-white: #FFFFFF;
+    --bryt-light-bg: #F5F8FC;
+
+    /* Brand Gradient */
+    --bryt-gradient: linear-gradient(135deg, var(--bryt-primary), var(--bryt-accent));
+
+    /* Semantic UI Variables (Light Mode Default) */
+    --bg-main: var(--bryt-light-bg);
+    --bg-surface: var(--bryt-white);
+    --text-primary: var(--bryt-near-black);
+    --text-secondary: #475569; /* Slate grey for readable supporting text */
+    --border-color: #E2E8F0;
+    
+    /* Typography */
+    --font-primary: 'Sora', sans-serif;
+}
+
+/* Dark Mode Variables (Activated via a class on the body later) */
+body.dark-mode {
+    --bg-main: var(--bryt-navy);
+    --bg-surface: var(--bryt-near-black);
+    --text-primary: var(--bryt-white);
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- 2. CSS RESET --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* For premium navigation feel */
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Makes text render sharper and premium */
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth dark mode transitions */
+}
+
+/* --- 3. TYPOGRAPHY HIERARCHY --- */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700; /* Bold by default */
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.02em; /* Tightens large text slightly for a tech feel */
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-weight: 800; /* ExtraBold */
+    /* Fluid typography: scales automatically between mobile and desktop */
+    font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); 
+}
+
+h2 {
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw + 1rem, 3.5rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw + 1rem, 2.5rem);
+}
+
+p {
+    font-weight: 400; /* Regular */
+    color: var(--text-secondary);
+    font-size: 1.125rem; /* Slightly larger base text for premium feel */
+    margin-bottom: 1.5rem;
+    max-width: 65ch; /* Prevents lines of text from getting too wide to read */
+}
+
+p.subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.35rem);
+    font-weight: 400;
+}
+
+/* Small uppercase labels used across the site (e.g., "ABOUT BRYT") */
+.label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--bryt-primary);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* --- 4. STRUCTURAL UTILITIES --- */
+
+/* The strict 1200-1400px constraint from the brief */
+.container {
+    width: 100%;
+    max-width: 1300px; 
+    margin: 0 auto;
+    padding: 0 5%; /* Flexible padding for mobile/tablet */
+}
+
+/* Base image rules */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+/* --- 5. BUTTONS & UI ELEMENTS --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 4px; /* Slight rounding, corporate feel */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background: var(--bryt-gradient);
+    color: var(--bryt-white);
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 20px rgba(29, 94, 208, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+.btn-secondary:hover {
+    border-color: var(--bryt-primary);
+    color: var(--bryt-primary);
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    background: var(--bryt-primary);
+    color: var(--bryt-white);
+}
+
+.btn-small:hover {
+    background: var(--bryt-accent);
+}
+
+/* --- 6. HEADER & NAVIGATION --- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: transparent;
+    transition: all 0.3s ease;
+    padding: 1.5rem 0;
+}
+
+/* Sticky State applied via JS */
+.header.scrolled {
+    background: rgba(245, 248, 252, 0.85); /* Adjusts to background var in JS */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+body.dark-mode .header.scrolled {
+    background: rgba(7, 26, 58, 0.85);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+}
+
+.logo-symbol {
+    width: 24px;
+    height: 24px;
+    background: var(--bryt-gradient);
+    border-radius: 4px;
+    transform: rotate(45deg);
+}
+
+/* Desktop Nav */
+.desktop-nav {
+    display: none;
+    gap: 2.5rem;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.desktop-nav a:hover {
+    color: var(--bryt-primary);
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-contact {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1001; /* Stays above overlay */
+}
+
+.hamburger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+/* Mobile Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-main);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    padding: 6rem 5% 2rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.4s ease;
+}
+
+/* Open State */
+body.menu-open {
+    overflow: hidden;
+}
+
+body.menu-open .mobile-menu-overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+body.menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+body.menu-open .hamburger-line:nth-child(2) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mobile-link {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.mobile-menu-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.build-link {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--bryt-primary);
+    text-decoration: none;
+}
+
+/* --- 7. HERO SECTION --- */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px; /* Offset for header */
+}
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+/* Abstract Ecosystem Visual */
+.hero-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ecosystem-ring {
+    position: absolute;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+}
+
+.outer-ring {
+    width: 100%;
+    height: 100%;
+}
+
+.inner-ring {
+    width: 60%;
+    height: 60%;
+    border-style: dashed;
+}
+
+.ecosystem-center .logo-symbol.large {
+    width: 48px;
+    height: 48px;
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 0 30px rgba(29, 94, 208, 0.4);
+}
+
+/* Ecosystem Nodes */
+.node {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--bryt-primary);
+    border-radius: 50%;
+    z-index: 5;
+}
+
+/* Positioning nodes around the rings */
+.node-1 { top: 20%; left: 15%; background: var(--bryt-accent); }
+.node-2 { top: 15%; right: 25%; }
+.node-3 { bottom: 20%; right: 15%; }
+.node-4 { bottom: 25%; left: 25%; }
+.node-5 { top: 50%; right: 0%; transform: translate(50%, -50%); }
+
+.node-label {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (min-width: 1024px) {
+    .hero-container {
+        grid-template-columns: 1.2fr 1fr;
+    }
+    
+    .desktop-nav {
+        display: flex;
+    }
+    
+    .mobile-menu-toggle {
+        display: none;
+    }
+    
+    .hide-mobile {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 1023px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+/* --- 8. GLOBAL LAYOUT UTILITIES --- */
+.section {
+    padding: 6rem 0; /* Generous whitespace */
+}
+
+.section-header {
+    margin-bottom: 4rem;
+    max-width: 800px;
+}
+
+/* --- 9. ABOUT BRYT SECTION --- */
+.about-header {
+    max-width: 800px;
+    margin-bottom: 4rem;
+}
+
+.principles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+.principle-card {
+    padding: 2.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.principle-card:hover {
+    transform: translateY(-4px);
+}
+
+.principle-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--bryt-primary);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Abstract shapes for principle icons */
+.principle-icon::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+}
+
+.scale-icon { background: var(--bryt-accent); }
+.scale-icon::after { border-radius: 0; transform: rotate(45deg); }
+
+.impact-icon { background: var(--bryt-navy); }
+
+/* --- 10. PRODUCTS ECOSYSTEM SECTION --- */
+.products-section {
+    background: var(--bg-surface);
+}
+
+body.dark-mode .products-section {
+    background: var(--bg-main); /* Keep it seamless in dark mode */
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* The Product Card */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-main); /* Slightly contrasts with surface */
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Top accent border that reveals on hover */
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--bryt-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(11, 18, 32, 0.08);
+    border-color: transparent;
+}
+
+body.dark-mode .product-card:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.product-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Card Header: Icon & Badge */
+.product-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.product-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: var(--bryt-navy);
+}
+
+/* CSS-based generic app icons for products */
+.dgm-icon { background: linear-gradient(135deg, #1D5ED0, #071A3A); }
+.cbt-icon { background: linear-gradient(135deg, #159FE3, #1D5ED0); }
+.pay-icon { background: linear-gradient(135deg, #0B1220, #475569); }
+.cloud-icon { background: linear-gradient(135deg, #475569, #94A3B8); }
+.ai-icon { background: linear-gradient(135deg, #071A3A, #1D5ED0); border-radius: 50%; }
+.energy-icon { background: linear-gradient(135deg, #10B981, #047857); } /* Subtle green hint for energy */
+
+/* Status Badges */
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.status-badge.live {
+    background: rgba(29, 94, 208, 0.1);
+    color: var(--bryt-primary);
+    border-color: rgba(29, 94, 208, 0.2);
+}
+
+.status-badge.coming-soon {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.status-badge.development {
+    background: rgba(21, 159, 227, 0.1);
+    color: var(--bryt-accent);
+    border-color: rgba(21, 159, 227, 0.2);
+}
+
+.status-badge.future {
+    background: transparent;
+    color: var(--text-secondary);
+    border-style: dashed;
+}
+
+/* Card Body */
+.product-card-body {
+    flex-grow: 1; /* Pushes footer to the bottom */
+}
+
+.product-category {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.product-card p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* Card Footer */
+.product-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.product-card:hover .product-card-footer {
+    color: var(--bryt-primary);
+}
+
+.arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .arrow {
+    transform: translateX(4px);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (min-width: 768px) {
+    .principles-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .products-grid {
+        /* Makes the grid visually impressive on large screens */
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+}
+/* --- 11. GENERAL UTILITIES --- */
+.alt-bg {
+    background: var(--bg-surface);
+}
+
+body.dark-mode .alt-bg {
+    background: var(--bryt-near-black);
+}
+
+.centered {
+    text-align: center;
+    margin: 0 auto 4rem auto;
+}
+
+/* --- 12. CAPABILITIES SECTION --- */
+.capabilities-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 3rem;
+}
+
+.capability-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.capability-item p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* --- 13. COMPANY STORY (PROCESS FLOW) --- */
+.process-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.process-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-main);
+    padding: 1rem 2rem;
+    border-radius: 40px;
+    border: 1px solid var(--border-color);
+}
+
+.step-number {
+    font-weight: 800;
+    color: var(--bryt-primary);
+    font-size: 1.25rem;
+}
+
+.process-step h4 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.process-divider {
+    width: 2px;
+    height: 30px;
+    background: var(--border-color);
+    margin-left: 2rem;
+}
+
+/* --- 14. FOUNDER & TEAM SECTION --- */
+.founder-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 6rem;
+}
+
+.founder-image-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--border-color);
+    border-radius: 12px;
+}
+
+.founder-meta {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.founder-meta h4 {
+    margin: 0;
+}
+
+.team-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.team-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.team-card h4 {
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+}
+
+.role {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* --- 15. VENTURES DIAGRAM --- */
+.ventures-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.diagram-node {
+    padding: 1rem 2rem;
+    background: var(--bg-main);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.diagram-node.parent {
+    background: var(--bryt-gradient);
+    color: var(--bryt-white);
+    border: none;
+    font-size: 1.25rem;
+}
+
+.diagram-line {
+    background: var(--border-color);
+}
+
+.diagram-line.vertical {
+    width: 2px;
+    height: 40px;
+}
+
+.diagram-branches {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+}
+
+/* --- 16. BUILT FOR SCALE (DARK SECTION) --- */
+.dark-section {
+    background-color: var(--bryt-navy);
+    color: var(--bryt-white);
+    padding: 8rem 0;
+}
+
+.dark-section h2 {
+    color: var(--bryt-white);
+}
+
+.dark-section p {
+    color: #94A3B8; /* Slate grey for readability on dark */
+}
+
+.scale-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+.feature-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.feature-list li {
+    font-size: 1.125rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.check-icon {
+    color: var(--bryt-accent);
+    font-weight: 800;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (min-width: 768px) {
+    .capabilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-flow {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .process-divider {
+        width: 100%;
+        height: 2px;
+        margin: 0;
+        flex-grow: 1;
+        margin: 0 1rem;
+    }
+
+    .founder-section {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .diagram-branches {
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
+    }
+    
+    .diagram-branches .branch {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .diagram-branches .diagram-line.horizontal {
+        width: 2px;
+        height: 30px;
+    }
+    
+    .scale-container {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+    }
+
+    .feature-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .capabilities-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* --- 17. INSIGHTS SECTION --- */
+.insights-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.insight-card {
+    padding: 2rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.insight-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--bryt-primary);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .insight-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.insight-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.insight-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    flex-grow: 1; /* Pushes 'read more' to the bottom */
+}
+
+.read-more {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--bryt-primary);
+}
+
+/* --- 18. CONTACT CTA SECTION --- */
+.contact-cta-section {
+    padding-bottom: 8rem; /* Extra space before footer */
+}
+
+.contact-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--bryt-gradient);
+}
+
+.contact-box h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+}
+
+.contact-box p {
+    margin: 0 auto 2.5rem auto;
+    max-width: 600px;
+}
+
+.contact-box .hero-buttons {
+    justify-content: center;
+    margin-top: 0;
+}
+
+/* --- 19. GLOBAL FOOTER --- */
+.global-footer {
+    background: var(--bryt-navy);
+    color: var(--bryt-white);
+    padding: 5rem 0 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.footer-brand p {
+    color: #94A3B8;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    color: var(--bryt-white);
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+}
+
+.footer-col h4 {
+    color: var(--bryt-white);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-col a {
+    display: block;
+    color: #94A3B8;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+    color: var(--bryt-accent);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    text-align: center;
+    color: #94A3B8;
+    font-size: 0.85rem;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--bryt-white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (min-width: 768px) {
+    .insights-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .contact-box {
+        padding: 5rem;
+    }
+    
+    .footer-links {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-container {
+        grid-template-columns: 300px 1fr;
+        gap: 6rem;
+    }
+}
+/* --- REAL BRAND LOGO STYLES --- */
+
+/* Header & Footer Logo Image */
+.brand-logo-img {
+    height: 32px;  /* Adjust height to fit your header nicely */
+    width: auto;   /* Maintains aspect ratio */
+    object-fit: contain;
+}
+
+/* Center Hero Visual Logo Image */
+.hero-logo-img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    z-index: 10;
+    position: relative;
+    filter: drop-shadow(0 0 20px rgba(29, 94, 208, 0.4)); /* Subtle glowing effect */
+}
+
+/* Ecosystem Product Card Logos */
+.product-logo-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px; /* Remove or keep depending on your logo style */
+    object-fit: contain; /* Ensures logo fits inside 48x48 without distortion */
+    background: rgba(255, 255, 255, 0.05); /* Optional subtle backing if logo is transparent */
+    padding: 4px; /* Gives transparent logos breathing room */
+}
+/* --- 20. PRODUCT DIRECTORY FILTERS --- */
+.product-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--bryt-primary);
+    color: var(--bryt-primary);
+}
+
+.filter-btn.active {
+    background: var(--bryt-navy);
+    color: var(--bryt-white);
+    border-color: var(--bryt-navy);
+}
+
+body.dark-mode .filter-btn.active {
+    background: var(--bryt-primary);
+    border-color: var(--bryt-primary);
+}
+
+/* --- 21. INDIVIDUAL PRODUCT HERO --- */
+.product-hero {
+    padding-top: 160px;
+    padding-bottom: 6rem;
+    background: var(--bg-main);
+}
+
+.product-hero-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.built-by-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.built-by-badge .badge-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.hero-product-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.product-category.large {
+    font-size: 1.1rem;
+    color: var(--bryt-primary);
+    display: block;
+    margin-top: -0.5rem;
+}
+
+/* App Mockup Placeholder */
+.app-mockup {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+body.dark-mode .app-mockup {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.mockup-header {
+    height: 32px;
+    background: var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 6px;
+}
+
+.mockup-header .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+}
+
+body.dark-mode .mockup-header .dot {
+    background: rgba(255,255,255,0.2);
+}
+
+.mockup-body {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+    .product-hero-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+/* --- UPDATED FOUNDER & TEAM IMAGE STYLES --- */
+
+/* Founder Image */
+.founder-image-wrapper {
+    width: 100%;
+    aspect-ratio: 4/5; /* Keeps a nice vertical portrait shape */
+    border-radius: 12px;
+    overflow: hidden; /* Clips the image to the rounded corners */
+    background: var(--border-color); /* Shows a grey box while the image loads */
+}
+
+.founder-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* GUARANTEES the image will never stretch or squish */
+    display: block;
+}
+
+/* Team Images */
+.team-photo-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Perfect square */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: var(--border-color); 
+}
+
+.team-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease; /* Prepares the image for the hover effect */
+}
+
+/* Premium touch: Slight zoom effect when hovering over a team card */
+.team-card:hover .team-img {
+    transform: scale(1.05);
+}
